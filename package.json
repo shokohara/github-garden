@@ -26,6 +26,7 @@
     "html-to-react": "^0.1.1",
     "jquery": "^2.1.4",
     "menubar": "^2.2.1",
+    "moment": "^2.10.6",
     "react": "^0.14.0-rc1",
     "react-dom": "^0.14.0-rc1"
   },

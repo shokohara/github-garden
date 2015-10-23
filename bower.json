@@ -1,7 +1,8 @@
 {
     "name": "electron-boilerplate",
     "dependencies": {
-        "open-sans-fontface": "~1.4.2"
+        "open-sans-fontface": "~1.4.2",
+        "moment": "~2.10.6"
     },
     "overrides": {
         "open-sans-fontface": {

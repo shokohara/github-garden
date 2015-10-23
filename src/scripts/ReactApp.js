@@ -1,17 +1,18 @@
-"use strict";
-
+// "use strict";
 import React from "react";
 import $ from "jQuery";
+import moment from "moment";
 
-// fill={$($.ajax({type: "GET",url: "https://github.com/skohar",async: false}).responseText).find("rect.day[data-date=2015-10-17]").attr("fill")}
 export default class ReactApp extends React.Component {
     constructor() {
         super();
-        this.state = {count:JSON.stringify($($.ajax({type: "GET",url: "https://github.com/skohar",async: false}).responseText).find("rect.day[data-date=2015-10-17]").attr("fill"))};
+        let date = moment.utc().format("YYYY-MM-DD");
+        this.state = {count:JSON.stringify($($.ajax({type: "GET",url: "https://github.com/skohar",async: false}).responseText).find("rect.day[data-date=" + date + "]").attr("fill"))};
+        this.state.count = this.state.count === undefined ? "#eeeeee" : this.state.count
     }
     render() {
         return (
-            <div>Hello World!{this.state.count}</div>
+            <div style={{width: 11 + `px`, height: 11 + `px`, backgroundColor: this.state.count}}></div>
         );
     }
 }
