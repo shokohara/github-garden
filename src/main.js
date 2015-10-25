@@ -29,13 +29,9 @@ var menubar = require("menubar");
 var mb = menubar({"icon": "src/images/#eeeeee.png"});
 mb.on("ready", () => {
     ipc.on('asynchronous-message', function(event, arg) {
-      console.log(mb)
-      console.log(mb.tray)
       let src = "src/images/"+arg.substr(1).substr(0, (arg.length -2))+".png"
-      console.log(src)
       mb.tray.setImage(src)
       // mb.tray.setImage("src/images/"+arg+".png")
-      console.log(arg)
     });
     // mb.tray.setImage("src/images/"+color+".png")
 });
