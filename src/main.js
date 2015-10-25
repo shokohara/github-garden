@@ -6,6 +6,14 @@ import BrowserWindow from "browser-window";
 import crashReporter from "crash-reporter";
 crashReporter.start();
 
+import moment from "moment";
+import $ from "jquery";
+// var Canvas = require('canvas')
+//   , Image = Canvas.Image
+//   , canvas = new Canvas(200, 200)
+//   , ctx = canvas.getContext('2d');
+import ipc from "ipc"
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
@@ -17,12 +25,19 @@ app.on("window-all-closed", () => {
     }
 });
 
-
 var menubar = require("menubar");
-var mb = menubar();
+var mb = menubar({"icon": "src/images/#eeeeee.png"});
 mb.on("ready", () => {
-    // console.log("app is ready");
-    // your app code here
+    ipc.on('asynchronous-message', function(event, arg) {
+      console.log(mb)
+      console.log(mb.tray)
+      let src = "src/images/"+arg.substr(1).substr(0, (arg.length -2))+".png"
+      console.log(src)
+      mb.tray.setImage(src)
+      // mb.tray.setImage("src/images/"+arg+".png")
+      console.log(arg)
+    });
+    // mb.tray.setImage("src/images/"+color+".png")
 });
 
 // This method will be called when Electron has done everything
