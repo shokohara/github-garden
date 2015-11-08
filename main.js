@@ -14,28 +14,40 @@ app.on("window-all-closed", function() {
 
 var ipc = require("ipc");
 app.on("ready", function() {
+  app.dock.hide();
   function createWindow() {
     mainWindow = new BrowserWindow({width: 800, height: 600, frame: false});
     mainWindow.loadUrl("file://" + __dirname + "/index.html");
     mainWindow.on("closed", function () {
       mainWindow = null;
     });
+    mainWindow.on("blur", function () {
+      if (mainWindow != null) {
+        mainWindow.hide();
+      }
+    })
   }
-  createWindow();
 
   tray = new Tray(__dirname + "/images/#eeeeee.png");
-  function clicked() {
-    if (mainWindow != null && mainWindow.isVisible()) {
-      mainWindow.hide();
-    } else {
-      if(mainWindow == null) {
-        createWindow()
-      } else {
-        mainWindow.show();
+  tray.setContextMenu(Menu.buildFromTemplate([
+    {
+      label: "Preference",
+      click: function () {
+        if (mainWindow == null) {
+          createWindow()
+        } else {
+          mainWindow.show();
+        }
+      }
+    },
+    {
+      label: "Quit",
+      click: function () {
+        app.quit();
       }
     }
-  }
-  tray.on("clicked", clicked);
+  ]));
+
   ipc.on("asynchronous-message", function (event, arg) {
     var color = arg === null ? "#eeeeee" : arg;
     var src = __dirname + "/images/" + color + ".png";
