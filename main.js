@@ -56,4 +56,11 @@ app.on("ready", function() {
     tray.setImage(src);
     tray.setPressedImage(src);
   });
+  ipc.on("asynchronous-message2", function (event, arg) {
+    if (mainWindow == null) {
+      createWindow()
+    } else {
+      mainWindow.show();
+    }
+  });
 });
