@@ -4,7 +4,8 @@
   "description": "A viewer for current own grass color",
   "main": "main.js",
   "scripts": {
-    "start": "electron main.js"
+    "start": "electron main.js",
+    "build": "./build.sh"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   },
   "dependencies": {
     "babel-core": "^5.8.29",
+    "electron-packager": "^5.1.1",
     "jquery": "^2.1.4",
     "menubar": "^2.3.0",
     "moment": "^2.10.6",
