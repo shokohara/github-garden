@@ -27,6 +27,8 @@ app.on("ready", function() {
       }
     })
   }
+  createWindow();
+  mainWindow.hide();
 
   tray = new Tray(__dirname + "/images/#eeeeee.png");
   tray.setContextMenu(Menu.buildFromTemplate([
