@@ -1,6 +1,10 @@
 var $ = require("jquery");
 var ipc = require("ipc");
 
+if (localStorage.getItem("name") === null) {
+  ipc.send("asynchronous-message2", "");
+}
+
 var GrassBox = React.createClass({
   loadGrassFromServer: function() {
     $.ajax({
