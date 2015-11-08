@@ -12,7 +12,6 @@ app.on("window-all-closed", function() {
   }
 });
 
-var menubar = require("menubar");
 var ipc = require("ipc");
 app.on("ready", function() {
   function createWindow() {
