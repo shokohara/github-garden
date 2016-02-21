@@ -54,9 +54,24 @@ var GrassBox = React.createClass({
   }
 });
 
+var CloseBox = React.createClass({
+  onClick: function (e) {
+    e.preventDefault();
+    ipc.send("asynchronous-message3", "")
+  },
+  render: function() {
+    return (
+      <div className="closeBox">
+        <button onClick={this.onClick}>Close</button>
+      </div>
+    );
+  }
+});
+
 ReactDOM.render(
   <div>
     <GrassBox/>
+    <CloseBox/>
   </div>,
   document.getElementById("content")
 );

@@ -80,4 +80,10 @@ app.on("ready", function() {
       mainWindow.show();
     }
   });
+  ipc.on("asynchronous-message3", function (event, arg) {
+    if (mainWindow == null) {
+    } else {
+      mainWindow.hide();
+    }
+  });
 });
