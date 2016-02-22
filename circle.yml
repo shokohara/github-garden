@@ -9,7 +9,6 @@ test:
     - date
 deployment:
   development:
-    branch: master
     tag: /release-.*/
     commands:
       - ./deploy.sh
