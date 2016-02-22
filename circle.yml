@@ -4,8 +4,3 @@ machine:
 test:
   override:
     - date
-deployment:
-  development:
-    branch: master
-    commands:
-      - ./deploy.sh

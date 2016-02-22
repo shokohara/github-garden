@@ -8,7 +8,7 @@
   "main": "main.js",
   "scripts": {
     "start": "$(npm bin)/electron .",
-    "build": "./build.sh"
+    "deploy": "bash deploy.sh"
   },
   "repository": {
     "type": "git",
