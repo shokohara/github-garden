@@ -8,6 +8,7 @@
   "main": "main.js",
   "scripts": {
     "start": "$(npm bin)/electron .",
+    "build": "$(npm bin)/electron-packager . github-garden --out dist --platform=darwin --arch=x64 --version=0.34.3 --overwrite",
     "deploy": "bash deploy.sh"
   },
   "repository": {
