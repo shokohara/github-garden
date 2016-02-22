@@ -1,11 +1,19 @@
 machine:
   node:
     version: 5.0.0
+dependencies:
+  pre:
+  - ./hub.sh
 test:
   override:
     - date
 deployment:
   development:
     branch: master
+    tag: /release-.*/
+    commands:
+      - ./deploy.sh
+  test:
+    branch: automate_deployment
     commands:
       - ./deploy.sh
