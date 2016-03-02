@@ -2,7 +2,7 @@ var $ = require("jquery");
 var ipc = require("ipc");
 
 if (localStorage.getItem("name") === null) {
-  ipc.send("asynchronous-message2", "");
+  ipc.send("window", "open");
 }
 
 var GrassBox = React.createClass({
@@ -17,14 +17,14 @@ var GrassBox = React.createClass({
           color: color === undefined ? "#eeeeee" : color
         };
         this.setState(state);
-        ipc.send("asynchronous-message", this.state.color);
+        ipc.send("tray.color", this.state.color);
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
   },
-  handleSubmit: function (e) {
+  handleSubmit: function(e) {
     e.preventDefault();
     var name = this.refs.name.value.trim();
     localStorage.setItem("name", name);
@@ -55,9 +55,9 @@ var GrassBox = React.createClass({
 });
 
 var CloseBox = React.createClass({
-  onClick: function (e) {
+  onClick: function(e) {
     e.preventDefault();
-    ipc.send("asynchronous-message3", "")
+    ipc.send("window", "close")
   },
   render: function() {
     return (

@@ -19,15 +19,16 @@ app.on("ready", function() {
   function createWindow() {
     mainWindow = new BrowserWindow({width: 800, height: 600, frame: false});
     mainWindow.loadUrl("file://" + __dirname + "/index.html");
-    mainWindow.on("closed", function () {
+    mainWindow.on("closed", function() {
       mainWindow = null;
     });
-    mainWindow.on("blur", function () {
+    mainWindow.on("blur", function() {
       if (mainWindow != null) {
         mainWindow.hide();
       }
     })
   }
+
   createWindow();
   mainWindow.hide();
 
@@ -44,7 +45,7 @@ app.on("ready", function() {
       },
       {
         label: "Preference",
-        click: function () {
+        click: function() {
           if (mainWindow == null) {
             createWindow()
           } else {
@@ -54,15 +55,16 @@ app.on("ready", function() {
       },
       {
         label: "Quit",
-        click: function () {
+        click: function() {
           app.quit();
         }
       }
     ]);
   }
+
   tray.setContextMenu(createContextMenu("Fetching"));
 
-  ipc.on("asynchronous-message", function (event, arg) {
+  ipc.on("tray.color", function(event, arg) {
     var color = arg === null ? "#eeeeee" : arg;
     var src = __dirname + "/images/" + color + ".png";
     tray.setImage(src);
@@ -73,17 +75,17 @@ app.on("ready", function() {
       tray.setContextMenu(createContextMenu(newLabel))
     }
   });
-  ipc.on("asynchronous-message2", function (event, arg) {
-    if (mainWindow == null) {
-      createWindow()
-    } else {
-      mainWindow.show();
-    }
-  });
-  ipc.on("asynchronous-message3", function (event, arg) {
-    if (mainWindow == null) {
-    } else {
-      mainWindow.hide();
+  ipc.on("window", function(event, arg) {
+    if (arg === "open") {
+      if (mainWindow == null) {
+        createWindow()
+      } else {
+        mainWindow.show();
+      }
+    } else if (arg === "close") {
+      if (mainWindow != null) {
+        mainWindow.hide();
+      }
     }
   });
 });
