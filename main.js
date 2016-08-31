@@ -1,28 +1,28 @@
-var app = require("app");
-var BrowserWindow = require("browser-window");
-var Tray = require("tray");
-var Menu = require("menu");
-var moment = require("moment");
-require("crash-reporter").start();
+const electron = require("electron");
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+const Tray = electron.Tray;
+const Menu = electron.Menu;
+const ipc = electron.ipcMain;
+const moment = require("moment");
 
-var mainWindow = null;
-var tray = null;
-app.on("window-all-closed", function() {
+let mainWindow;
+let tray;
+app.on("window-all-closed", () => {
   if (process.platform != "darwin") {
     app.quit();
   }
 });
 
-var ipc = require("ipc");
-app.on("ready", function() {
+app.on("ready", () => {
   app.dock.hide();
   function createWindow() {
     mainWindow = new BrowserWindow({width: 800, height: 600, frame: false});
-    mainWindow.loadUrl("file://" + __dirname + "/index.html");
-    mainWindow.on("closed", function() {
+    mainWindow.loadURL("file://" + __dirname + "/index.html");
+    mainWindow.on("closed", () => {
       mainWindow = null;
     });
-    mainWindow.on("blur", function() {
+    mainWindow.on("blur", () => {
       if (mainWindow != null) {
         mainWindow.hide();
       }
@@ -38,24 +38,21 @@ app.on("ready", function() {
       {
         label: newLabel,
         enabled: false
-      },
-      {
+      }, {
         label: "GitHub Garden v" + app.getVersion(),
         enabled: false
-      },
-      {
+      }, {
         label: "Preference",
-        click: function() {
+        click: () => {
           if (mainWindow == null) {
             createWindow()
           } else {
             mainWindow.show();
           }
         }
-      },
-      {
+      }, {
         label: "Quit",
-        click: function() {
+        click: () => {
           app.quit();
         }
       }
@@ -64,18 +61,18 @@ app.on("ready", function() {
 
   tray.setContextMenu(createContextMenu("Fetching"));
 
-  ipc.on("tray.color", function(event, arg) {
-    var color = arg === null ? "#eeeeee" : arg;
-    var src = __dirname + "/images/" + color + ".png";
+  ipc.on("tray.color", (event, arg) => {
+    const color = arg === null ? "#eeeeee" : arg;
+    const src = __dirname + "/images/" + color + ".png";
     tray.setImage(src);
     tray.setPressedImage(src);
-    var lastUpdatedAt = new Date().getTime();
-    var newLabel = "Last updated at " + moment(lastUpdatedAt).format('HH:mm:ss');
+    const lastUpdatedAt = new Date().getTime();
+    const newLabel = "Last updated at " + moment(lastUpdatedAt).format('HH:mm:ss');
     if (tray.menu.items[0].label !== newLabel) {
       tray.setContextMenu(createContextMenu(newLabel))
     }
   });
-  ipc.on("window", function(event, arg) {
+  ipc.on("window", (event, arg) => {
     if (arg === "open") {
       if (mainWindow == null) {
         createWindow()

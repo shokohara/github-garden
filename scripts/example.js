@@ -1,11 +1,12 @@
-var $ = require("jquery");
-var ipc = require("ipc");
+const electron = require("electron");
+const ipc = electron.ipcMain;
+const $ = require("jquery");
 
 if (localStorage.getItem("name") === null) {
   ipc.send("window", "open");
 }
 
-var GrassBox = React.createClass({
+const GrassBox = React.createClass({
   loadGrassFromServer: function() {
     $.ajax({
       url: "https://github.com/" + this.state.name,
@@ -26,7 +27,7 @@ var GrassBox = React.createClass({
   },
   handleSubmit: function(e) {
     e.preventDefault();
-    var name = this.refs.name.value.trim();
+    const name = this.refs.name.value.trim();
     localStorage.setItem("name", name);
     this.setState({name: name});
   },
@@ -54,7 +55,7 @@ var GrassBox = React.createClass({
   }
 });
 
-var CloseBox = React.createClass({
+const CloseBox = React.createClass({
   onClick: function(e) {
     e.preventDefault();
     ipc.send("window", "close")

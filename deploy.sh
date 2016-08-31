@@ -1,5 +1,5 @@
 #!/bin/bash
-$(npm bin)/electron-packager . github-garden --out dist --platform=darwin --arch=x64 --version=0.34.3
+$(npm bin)/electron-packager . github-garden --out dist --platform=darwin --overwrite --arch=x64 --version=1.2.1
 if [[ $(git tag) == '' ]]; then
   git tag 'release-v0.0.0'
 fi
